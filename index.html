@@ -1,98 +1,111 @@
 <!DOCTYPE html>
-<html lang='es'>
+<html lang="es">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Calculadora Simple</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        #calculadora { max-width: 400px; margin: 50px auto; border: 1px solid #ccc; padding: 10px; border-radius: 5px; }
-        input { width: 100%; margin: 5px 0; padding: 10px; font-size: 18px; box-sizing: border-box; }
-        button { width: 23%; margin: 1%; padding: 10px; font-size: 18px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de contacto</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+      color: #1f2937;
+    }
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    .subtitle { color: #6b7280; margin-bottom: 1.5rem; }
+    .field { margin-bottom: 1rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+    textarea { resize: vertical; min-height: 130px; }
+    button {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      background: #6366f1;
+      color: #ffffff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #4f46e5; }
+    .message { margin-bottom: 1rem; padding: 0.75rem 0.9rem; border-radius: 10px; display: none; }
+    .message.error { display: block; background: #fee2e2; color: #b91c1c; }
+    .message.success { display: block; background: #dcfce7; color: #15803d; }
+    @media (max-width: 480px) {
+      .card { padding: 1.25rem; border-radius: 12px; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
 </head>
 <body>
-    <div id='calculadora'>
-        <input type='text' id='resultado' disabled />
-        <div>
-            <button onclick='agregarNumero(1)'>1</button>
-            <button onclick='agregarNumero(2)'>2</button>
-            <button onclick='agregarNumero(3)'>3</button>
-            <button onclick='setOperacion("+")'>+</button>
-        </div>
-        <div>
-            <button onclick='agregarNumero(4)'>4</button>
-            <button onclick='agregarNumero(5)'>5</button>
-            <button onclick='agregarNumero(6)'>6</button>
-            <button onclick='setOperacion("-")'>&minus;</button>
-        </div>
-        <div>
-            <button onclick='agregarNumero(7)'>7</button>
-            <button onclick='agregarNumero(8)'>8</button>
-            <button onclick='agregarNumero(9)'>9</button>
-            <button onclick='setOperacion("*")'>&times;</button>
-        </div>
-        <div>
-            <button onclick='agregarNumero(0)'>0</button>
-            <button onclick='calcular()'>=</button>
-            <button onclick='setOperacion("/")'>&divide;</button>
-            <button onclick='borrar()'>C</button>
-        </div>
-    </div>
-    <script>
-        let operacion = '';
-        let numeroAnterior = '';
-        let reiniciarPantalla = false;
-        function pantalla() {
-            return document.getElementById('resultado');
-        }
-        function agregarNumero(numero) {
-            if (reiniciarPantalla) {
-                pantalla().value = '';
-                reiniciarPantalla = false;
-            }
-            pantalla().value += numero;
-        }
-        function setOperacion(op) {
-            if (pantalla().value === '' || pantalla().value === 'Error') return;
-            if (operacion !== '' && numeroAnterior !== '') {
-                calcular();
-                if (pantalla().value === 'Error') return;
-            }
-            numeroAnterior = pantalla().value;
-            operacion = op;
-            pantalla().value = '';
-            reiniciarPantalla = false;
-        }
-        function calcular() {
-            const numeroActual = pantalla().value;
-            if (operacion === '' || numeroAnterior === '' || numeroActual === '') return;
-            const a = parseFloat(numeroAnterior);
-            const b = parseFloat(numeroActual);
-            let resultado;
-            if (operacion === '+') {
-                resultado = a + b;
-            } else if (operacion === '-') {
-                resultado = a - b;
-            } else if (operacion === '*') {
-                resultado = a * b;
-            } else if (operacion === '/') {
-                resultado = b === 0 ? 'Error' : a / b;
-            }
-            if (typeof resultado === 'number') {
-                resultado = parseFloat(resultado.toPrecision(12));
-            }
-            pantalla().value = resultado;
-            operacion = '';
-            numeroAnterior = '';
-            reiniciarPantalla = true;
-        }
-        function borrar() {
-            pantalla().value = '';
-            operacion = '';
-            numeroAnterior = '';
-            reiniciarPantalla = false;
-        }
-    </script>
+  <main class="card">
+    <h1>Contacto</h1>
+    <p class="subtitle">Completá el formulario y te responderemos a la brevedad.</p>
+    <div id="mensaje-estado" class="message" role="alert"></div>
+    <form id="form-contacto" novalidate>
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="asunto">Asunto</label>
+        <input type="text" id="asunto" name="asunto">
+      </div>
+      <div class="field">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje"></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+  <script>
+    document.getElementById('form-contacto').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var estado = document.getElementById('mensaje-estado');
+      var campos = ['nombre', 'correo', 'asunto', 'mensaje'];
+      var incompleto = campos.some(function (id) {
+        return document.getElementById(id).value.trim() === '';
+      });
+      if (incompleto) {
+        estado.className = 'message error';
+        estado.textContent = 'Por favor completá todos los campos';
+        return;
+      }
+      estado.className = 'message success';
+      estado.textContent = '¡Gracias! Tu mensaje fue enviado.';
+      this.reset();
+    });
+  </script>
 </body>
 </html>
